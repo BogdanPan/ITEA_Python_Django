@@ -1,1 +1,1 @@
-# ITEA_Python_Django-
+# ITEA_Python_Django
