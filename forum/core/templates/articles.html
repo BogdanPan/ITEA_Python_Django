@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Articles</title>
+    <style>
+
+    body {
+        background-image: url("http://wallpoper.com/images/00/31/33/51/black-background_00313351.jpg");
+    }
+
+    ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #333;
+    }
+
+    li {
+        float: left;
+    }
+
+    li a {
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+    }
+
+    li a:hover {
+        background-color: #111;
+    }
+    table{
+        color: white;
+    }
+    a{
+        color: white;
+    }
+    </style>
+</head>
+<body>
+    <ul>
+        <li><a class="active" href="/">Home</a></li>
+        <li><a href="/articles">News</a></li>
+        <li><a href="/contact">Contact</a></li>
+        <li><a href="/about">About</a></li>
+    </ul>
+    {% for article in articles %}
+        <a href="/articles/{{article.name}}">{{article.article_name}}</a>
+    {% endfor %}
+</body>
+</html>
