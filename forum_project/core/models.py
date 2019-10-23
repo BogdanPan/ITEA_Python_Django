@@ -19,3 +19,6 @@ class Article(models.Model):
 		for obj in cls.objects.all():
 			name_list.append(obj.name)
 		return name_list
+
+	def __str__(self):
+		return f"{self.name}, {self.article_name}"
