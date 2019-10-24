@@ -50,8 +50,8 @@
         <li><a href="/about">About</a></li>
     </ul>
     {% for article in articles %}
-    <img src={{article.article_image.url}} width="60" height="60">
-    <a href="articles/{{article.name}}">{{article.article_name}}</a>
+    <img src={{article.image.url}} width="60" height="60">
+    <a href="articles/{{article.slug}}">{{article.title}}</a>
     {% endfor %}
 </body>
 </html>

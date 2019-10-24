@@ -1,17 +1,20 @@
 from django.db import models
-
+from django.utils.text import slugify
 # Create your models here.
 
 
 class Article(models.Model):
-	name = models.CharField(max_length=30)
-	article_name = models.TextField()
-	article_text = models.TextField()
-	article_image = models.ImageField(upload_to='article_images', blank=True)
+	title = models.TextField(max_length=255)
+	text = models.TextField()
+	image = models.ImageField(upload_to='article_images', blank=True, null=True)
+	slug = models.SlugField(default='', blank=True)
+
+	updated = models.DateTimeField(auto_now=True)
+	created = models.DateTimeField(auto_now_add=True)
 
 	@classmethod
-	def find_by_name(cls, name):
-		return cls.objects.filter(name=name).first()
+	def find_by_slug(cls, slug):
+		return cls.objects.filter(slug=slug).first()
 
 	@classmethod
 	def get_all_url_names(cls):
@@ -21,4 +24,8 @@ class Article(models.Model):
 		return name_list
 
 	def __str__(self):
-		return f"{self.name}, {self.article_name}"
+		return f"{self.title}, {self.title}"
+
+	def save(self, *args, **kwargs):
+		self.slug = slugify(value=self.title, allow_unicode=True)
+		super().save()

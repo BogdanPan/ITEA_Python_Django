@@ -48,7 +48,7 @@
         <li><a href="/about">About</a></li>
     </ul>
     {% for article in articles %}
-        <a href="/articles/{{article.name}}">{{article.article_name}}</a>
+        <a href="/articles/{{article.slug}}">{{article.title}}</a>
     {% endfor %}
 </body>
 </html>

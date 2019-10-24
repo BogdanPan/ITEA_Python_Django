@@ -4,8 +4,8 @@ from .models import Article
 
 
 def article(request, article_name):
-	art = Article.find_by_name(article_name)
-	ctx = {'name': art.article_name, 'text': art.article_text}
+	art = Article.find_by_slug(article_name)
+	ctx = {'name': art.a_title, 'text': art.a_text}
 	return render(request, 'article.html', ctx)
 
 
