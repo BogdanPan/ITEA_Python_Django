@@ -5,12 +5,20 @@ from .models import Article
 
 def article(request, article_name):
 	art = Article.find_by_slug(article_name)
-	ctx = {'name': art.a_title, 'text': art.a_text}
-	return render(request, 'article.html', ctx)
+	if art:
+		ctx = {'name': art.title, 'text': art.text}
+		return render(request, 'article.html', ctx)
+	else:
+		return render(request, 'error404.html')
 
 
 def index(request):
-	ctx = {'articles': Article.objects.all()}
+	query = Article.objects.all().order_by('-created')
+	if len(query) <= 5:
+		ctx = {'articles': query}
+	else:
+		ctx = {'articles': query[:5]}
+
 	return render(request, 'main_page.html', ctx)
 
 

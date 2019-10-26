@@ -23,6 +23,14 @@ class Article(models.Model):
 			name_list.append(obj.name)
 		return name_list
 
+	def main_page_text(self):
+		full_text_str = self.text
+		full_text_str_len = len(full_text_str)
+		if full_text_str_len <= 270:
+			return full_text_str[:full_text_str_len]
+		else:
+			return full_text_str[:270]+'...'
+
 	def __str__(self):
 		return f"{self.title}, {self.title}"
 
