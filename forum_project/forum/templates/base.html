@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+    {% load static %}
+    body{
+        background-image: url(http://wallpoper.com/images/00/31/33/51/black-background_00313351.jpg);
+    }
+    </style>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+
+</head>
+<body>
+    {% include 'core/components/header.html' %}
+    {% block content %}
+
+    {% endblock content %}
+    {% include 'core/components/footer.html' %}
+</body>
+</html>

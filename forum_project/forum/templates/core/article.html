@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+    h2{
+        color: white;
+    }
+    ul{
+        color: white;
+    }
+    .white{
+        color: white;
+    }
+    .inline{
+        display: inline;
+    }
+    .text_box{
+        background-color: #2E2633;
+        border-style: solid;
+        border-width: 5px;
+        margin: 3px;
+        border-radius: 10px;
+        width: 70%;
+        word-wrap: break-word;
+
+    }
+    .text_box h3{
+        color: white;
+    }
+    .text_box p{
+        color: #EFFFCD;
+    }
+</style>
+<div class="white">
+    <h3>{{article.title}}</h3>
+    <p>{{article.text}}</p>
+    <p>Оновлено {{article.updated}}</p>
+    <p>Сворено {{article.created}}</p>
+</div>
+<br>
+<div class="white">
+    <b>Comments</b>
+</div>
+    {% if comments %}
+        {% for comment in comments %}
+        <div class="text_box">
+        <h3 class="inline">{{comment.username}}</h3><p class="inline">    {{comment.created}}</p>
+        <p>{{comment.text}}</p>
+        </div>
+        {% endfor %}
+    {% else %}
+        <p>Nothing to see here</p>
+    {% endif %}
+
+    <br>
+<div>
+{% if user.is_authenticated %}
+    <form method="POST" role="form">{% csrf_token %}
+      <div class="form-group">
+        <label for="text" class="white">Enter your comment here</label>
+        <textarea name="text" class="form-control" id="text" rows="4" required="true" value="text"></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+{% else %}
+    <div class="white">
+        <p>You must login to leave a comment</p>
+    </div>
+</div>
+{% endif %}
+{% endblock content %}

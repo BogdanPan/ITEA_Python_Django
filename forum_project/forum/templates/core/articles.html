@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+    div a {
+        text-decoration:none;
+        color: #EFFFCD;
+    }
+</style>
+<div>
+    {% for article in articles %}
+        <a href="/articles/{{article.slug}}">{{article.title}} (comments: {{article.get_number_of_posts}})</a>
+        <div>
+            <a href="/articles/{{article.slug}}">{{article.created}}</a>
+        </div>
+        <br>
+    {% endfor %}
+</div>
+{% endblock content %}

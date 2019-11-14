@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <style>
+    h2{
+        color: white;
+    }
+    ul{
+        color: white;
+    }
+    label{
+        color: white;
+    }
+    span{
+        color: white;
+    }
+</style>
+  <h2>Sign up</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Sign up</button>
+  </form>
+{% endblock %}

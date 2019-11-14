@@ -1,0 +1,43 @@
+<style>
+    ul {
+        list-style-type: none;
+        margin: auto;
+        padding: 0;
+        overflow: hidden;
+        background-color: #555152;
+        sticky;
+    }
+
+    li {
+        float: left;
+    }
+    li.right{
+        float: right;
+    }
+
+    li a {
+        display: block;
+        color: #EFFFCD;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+    }
+
+    li a:hover {
+        background-color: #2E2633;
+    }
+</style>
+<header>
+    <ul>
+        <li><a class="active" href="{% url 'index' %}">Home</a></li>
+        <li><a href="/articles">News</a></li>
+        {% if user.is_authenticated %}
+            <li class="right"><a href="/logout">Logout</a></li>
+            <li class="right"><a>Hello, {{user}}</a></li>
+        {% else %}
+            <li class="right"><a href="/signup">Signup</a></li>
+            <li class="right"><a href="/login">Login</a></li>
+        {% endif %}
+    </ul>
+
+</header>
