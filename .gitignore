@@ -102,5 +102,8 @@ venv.bak/
 
 # mypy
 .mypy_cache/
-
-.vscode/settings.json
+.vscode/
+forum_project/apps/core/migrations/*
+forum_project/apps/roleplay_user_and_login/migrations/*
+forum_project/static_content/
+forum_project/forum/secret_info.py
