@@ -1,2 +1,4 @@
 secret_info.py
 migrations/
+static_content/
+venv/
