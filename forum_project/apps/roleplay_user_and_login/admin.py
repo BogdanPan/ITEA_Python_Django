@@ -3,7 +3,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.admin import UserAdmin
 
 from .forms import UserCreationForm, UserChangeForm
-from .models import MyUser
+from .models import MyUser, Inventory, Item, Project
 
 
 class CustomUserAdmin(UserAdmin):
@@ -22,6 +22,18 @@ class CustomUserAdmin(UserAdmin):
     ordering = ('username', )
 
     filter_horizontal = ()
+
+@admin.register(Project)
+class ProjectAdmin(admin.ModelAdmin):
+    list_display = ('name',)
+
+@admin.register(Inventory)
+class InventoryAdmin(admin.ModelAdmin):
+    list_display = ('user', 'project', 'item_count')
+
+@admin.register(Item)
+class ItemAdmin(admin.ModelAdmin):
+    list_display = ('inventory', 'name', 'description', 'image', 'price', 'in_stock',)
 
 
 admin.site.unregister(MyUser)

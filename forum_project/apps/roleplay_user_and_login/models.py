@@ -50,3 +50,26 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
     @property
     def is_staff(self):
         return self.is_admin
+class Project(models.Model):
+    name = models.CharField(max_length=64)
+
+class Inventory(models.Model):
+    user = models.ForeignKey(MyUser, on_delete=models.CASCADE)
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    item_count = models.IntegerField(blank=True)
+
+    @classmethod
+    def get_user_inventorys(cls, user):
+        return cls.objects.filter(user=user)
+
+class Item(models.Model):
+    inventory = models.ForeignKey(Inventory, on_delete=models.CASCADE)
+    name = models.CharField(max_length=124)
+    description = models.TextField(null=True, blank=True)
+    image = models.ImageField(null=True, blank=True)
+    price = models.IntegerField(default=0, blank=True)
+    in_stock = models.BooleanField(default=True, blank=True)
+
+    @classmethod
+    def get_inventory_items(cls, inventory):
+        return cls.objects.filter(inventory=inventory)

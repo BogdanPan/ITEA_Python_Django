@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+    <style>
+    h1{
+        color: White;
+    }
+    </style>
+    {% if user.is_authenticated %}
+        <h1 >Hello {{user}}</h1>
+        {% for inv in inventory %}
+            <a href="/inventory/{{inv.id}}">{{inv.project.name}}</a>
+        {% endfor %}
+    {% endif %}
+{% endblock content %}

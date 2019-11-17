@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block content %}
+    <style>
+    h1{
+        color: White;
+    }
+    </style>
+    {% for item in items %}
+        <p>{{item.name}}</>
+    {% endfor %}
+{% endblock content %}
