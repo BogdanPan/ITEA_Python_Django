@@ -2,6 +2,7 @@ from django.contrib.auth import login, authenticate
 from django.shortcuts import render, redirect
 from django.views.generic import View, TemplateView, ListView, DetailView, RedirectView, CreateView
 from .models import Inventory, Item
+from ..core.models import Comment
 from .forms import UserCreationForm
 
 
@@ -23,7 +24,11 @@ class CabinetView(TemplateView):
     template_name = 'roleplay_user_and_login/cabinet.html'
 
     def get_context_data(self, **kwargs):
-        ctx = {'inventory': Inventory.get_user_inventorys(self.request.user)}
+        n_of_comments = Comment.objects.filter(user=self.request.user).count()
+        ctx = {
+            'inventory': Inventory.get_user_inventorys(self.request.user), 
+            'number_of_comments': n_of_comments
+        }
         return ctx
 
 class InventoryView(CreateView):

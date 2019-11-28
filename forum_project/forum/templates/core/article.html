@@ -9,6 +9,7 @@
     }
     .white{
         color: white;
+        word-wrap: break-word;
     }
     .inline{
         display: inline;
@@ -39,27 +40,44 @@
 <br>
 <div class="white">
     <b>Comments</b>
-</div>
+</div>    
+<div>
     {% if comments %}
-        {% for comment in comments %}
+        {% for comment in comments.object_list %}
         <div class="text_box">
-        <h3 class="inline">{{comment.username}}</h3><p class="inline">    {{comment.created}}</p>
+        <h3 class="inline">{{comment.user}}</h3><p class="inline">    {{comment.created}}</p>
         <p>{{comment.text}}</p>
         </div>
         {% endfor %}
     {% else %}
         <p>Nothing to see here</p>
     {% endif %}
-
     <br>
-<div>
+    <div class="pagination">
+    <span class="step-links">
+        {% if comments.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ comments.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ comments.number }} of {{ comments.paginator.num_pages }}.
+        </span>
+
+        {% if comments.has_next %}
+            <a href="?page={{ comments.next_page_number }}">next</a>
+            <a href="?page={{ comments.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+    </div>
+</div>
 {% if user.is_authenticated %}
     <form method="POST" role="form">{% csrf_token %}
-      <div class="form-group">
-        <label for="text" class="white">Enter your comment here</label>
-        <textarea name="text" class="form-control" id="text" rows="4" required="true" value="text"></textarea>
-      </div>
-      <button type="submit" class="btn btn-primary">Submit</button>
+        <div class="form-group">
+            <label for="text" class="white">Enter your comment here</label>
+            <textarea name="text" class="form-control" id="text" rows="4" required="true" value="text"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 {% else %}
     <div class="white">

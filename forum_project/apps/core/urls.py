@@ -1,4 +1,4 @@
-from .views import article_view, ArticlesView, MainPageView, ArticleView
+from .views import ArticlesView, MainPageView, ArticleView
 from django.urls import path, include
 from django.views.generic import TemplateView
 

@@ -4,6 +4,7 @@ from ..core.forms import CommentForm
 from django.views.generic import View, TemplateView, ListView, DetailView, RedirectView, CreateView
 from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.urls import reverse
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
 
 class MainPageView(TemplateView):
@@ -41,31 +42,22 @@ class ArticleView(CreateView):
 	def get_context_data(self, **kwargs):
 		art = self.get_object()
 		comments = Comment.find_by_art(art)
+		paginator = Paginator(object_list=comments.order_by('-created'), per_page=5)
+		page = self.request.GET.get('page')
+		try:
+			comments = paginator.page(page)
+		except PageNotAnInteger:
+			comments = paginator.page(1)
+		except EmptyPage:
+			comments = paginator.page(paginator.num_pages)
+
 		ctx = {'article': art, 'comments': comments}
 		return ctx
 
 	def form_valid(self, form):
 		comment = form.save(commit=False)
 		comment.article = Article.find_by_slug(self.get_object().slug)
-		comment.username = str(self.request.user)
+		comment.user = self.request.user
 		# do something here
 		comment.save()
 		return render(self.request, self.template_name, self.get_context_data())
-
-
-def article_view(request, article_slug):
-	art = Article.find_by_slug(article_slug)
-	comments = Comment.find_by_art(art)
-	if request.method == 'POST':
-		form = CommentForm(request.POST)
-		if form.is_valid():
-			comment = form.save(commit=False)
-			comment.article = Article.find_by_slug(article_slug)
-			comment.username = str(request.user)
-			# do something here
-			comment.save()
-	if art:
-		ctx = {'article': art, 'comments': comments}
-		return render(request, 'core/article.html', ctx)
-	else:
-		return render(request, 'core/error404.html')

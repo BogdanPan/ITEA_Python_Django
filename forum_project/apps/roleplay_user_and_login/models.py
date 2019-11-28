@@ -53,10 +53,13 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
 class Project(models.Model):
     name = models.CharField(max_length=64)
 
+    def __str__(self):
+        return self.name
+    
+
 class Inventory(models.Model):
     user = models.ForeignKey(MyUser, on_delete=models.CASCADE)
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
-    item_count = models.IntegerField(blank=True)
 
     @classmethod
     def get_user_inventorys(cls, user):
@@ -73,3 +76,7 @@ class Item(models.Model):
     @classmethod
     def get_inventory_items(cls, inventory):
         return cls.objects.filter(inventory=inventory)
+    
+    def __str__(self):
+        return self.name
+    

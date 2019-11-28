@@ -26,8 +26,8 @@ class ArticleAdmin(admin.ModelAdmin):
 
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
-	list_display = ('id', 'article', 'username', 'show_text')
-	list_display_links = ('id', 'article', 'username', 'show_text')
+	list_display = ('id', 'article', 'user', 'show_text')
+	list_display_links = ('id', 'article', 'user', 'show_text')
 	readonly_fields = ('created', 'updated',)
 
 	@staticmethod

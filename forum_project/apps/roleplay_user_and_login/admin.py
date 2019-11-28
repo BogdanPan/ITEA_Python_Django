@@ -29,7 +29,7 @@ class ProjectAdmin(admin.ModelAdmin):
 
 @admin.register(Inventory)
 class InventoryAdmin(admin.ModelAdmin):
-    list_display = ('user', 'project', 'item_count')
+    list_display = ('user', 'project', )
 
 @admin.register(Item)
 class ItemAdmin(admin.ModelAdmin):

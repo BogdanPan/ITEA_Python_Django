@@ -2,13 +2,26 @@
 {% block content %}
     <style>
     h1{
-        color: White;
+        color: white;
     }
+    p{
+        color: white;
+    }
+    
     </style>
     {% if user.is_authenticated %}
         <h1 >Hello {{user}}</h1>
-        {% for inv in inventory %}
-            <a href="/inventory/{{inv.id}}">{{inv.project.name}}</a>
-        {% endfor %}
+        <h1> Number of comments: {{number_of_comments}} </h1>
+        <h1>Inventory:</h1>
+        {% if inventory%}
+            {% for inv in inventory %}
+                <a href="/inventory/{{inv.id}}">{{inv.project.name}}</a>
+            {% endfor %}
+        {% else %}
+            <p>
+                No items here
+            </p>
+        {% endif %}
+        
     {% endif %}
 {% endblock content %}
