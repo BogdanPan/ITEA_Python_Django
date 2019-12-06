@@ -25,7 +25,7 @@ from django.contrib.auth.forms import AuthenticationForm
 class RegistrationView(FormView):
     template_name = 'roleplay_user_and_login/signup.html'
     form_class = UserCreationForm
-    success_url = 'core:index'
+    success_url = reverse_lazy('core:index')
     def form_valid(self, form):
         user = form.save()
         user.send_user_mail('Registration', 'Welcome!')
