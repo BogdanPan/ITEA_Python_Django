@@ -73,6 +73,9 @@ table{
         position: absolute;
         display: inline;
     }
+    label{
+        color:white;
+    }
 </style>
 <div>
     <br>
@@ -98,7 +101,17 @@ table{
         </tr>
             {% endfor %}
     </table>
-    <iframe src="https://discordapp.com/widget?id=645292086735667201&theme=dark" width="300" height="400" allowtransparency="true" frameborder="0" align='right'></iframe>
 </div>
-
+<div>
+<iframe src="https://discordapp.com/widget?id=645292086735667201&theme=dark" width="300" height="400" allowtransparency="true" frameborder="0" align='right'></iframe>
+</div>
+<div>
+    {% if user.is_admin %}
+        <form method="POST" enctype="multipart/form-data">{% csrf_token %}
+            {% csrf_token %}
+            {{ form }}
+            <button type="submit">Submit</button>
+        </form>
+    {% endif %}
+</div>
 {% endblock content %}

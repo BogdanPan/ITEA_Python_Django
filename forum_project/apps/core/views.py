@@ -1,20 +1,26 @@
 from django.shortcuts import render
 from .models import Article, Comment
-from ..core.forms import CommentForm
+from ..core.forms import CommentForm, ArticleForm
 from django.views.generic import View, TemplateView, ListView, DetailView, RedirectView, CreateView
 from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.urls import reverse
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
 
-class MainPageView(TemplateView):
+class MainPageView(CreateView):
 	template_name = 'core/main_page.html'
+	form_class = ArticleForm
+	model = Article
+	success_url = ''
 
 	def get_context_data(self, **kwargs):
-		query = Article.objects.all().order_by('-created')
-		context = ({'articles': query, 'number_of_posts': len(query)})
+		query = Article.objects.all().order_by('-created')[:5]
+		context = ({'articles': query, 'number_of_posts': len(query), 'form':self.form_class})
 		return context
 
+	def form_valid(self, form):
+		form.save()
+		return render(self.request, self.template_name, self.get_context_data())
 
 class ArticlesView(TemplateView):
 	template_name = 'core/articles.html'

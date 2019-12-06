@@ -9,3 +9,7 @@ class CommentForm(forms.ModelForm):
 		model = Comment
 		fields = '__all__'
 
+class ArticleForm(forms.ModelForm):
+	class Meta(object):
+		model = Article
+		fields = ('title', 'text', 'image', )
