@@ -1,83 +1,8 @@
 {% extends 'base.html' %}
 {% block content %}
 {% load custom_filters %}
-<style>
-table{
-        color: black;
-    }
-    h1{
-        color: white;
-    }
-    .news_box{
-        background-color: #2E2633;
-        border-style: solid;
-        border-width: 5px;
-        margin: 1px;
-        border-radius: 20px;
-        width: 50%;
-        
-    }
-    .news_box img{
-        background-color: #DCE9BE;
-        border-style: solid;
-        border-width: 0px;
-        margin: 0px;
-        border-radius: 20px;
-    }
-    .news_box p{
-        display: inline;
-        align: left;
-    }
-    .inner_box{
-
-        background-color: #2E2633;
-        border-style: solid;
-        border-width: 5px;
-        margin: 0 auto;
-        border-radius: 20px;
-        width: 97.5%;
-    }
-    .inner_box p{
-        vertical-align: top;
-        text-align: right;
-        color: white;
-        word-wrap: break-word;
-    }
-    .inner_box a{
-        text-decoration:none;
-        color: #EFFFCD;
-        word-wrap: break-word;
-    }
-    .top_box{
-        background-color: #555152;
-        border-style: solid;
-        border-width: 1px;
-        margin: 0 auto;
-        border-radius: 20px;
-        width: 100%;
-        text-align: center;
-    }
-    .left_box{
-        display: inline;
-        word-wrap: break-word;
-    }
-    .left_box img{
-        border-style: relative;
-        border-width: 4px;
-        margin: 0 auto;
-        border-radius: 20px;
-        background-color: white;
-    }
-    .right_box{
-        width: 40%;
-        position: absolute;
-        display: inline;
-    }
-    label{
-        color:white;
-    }
-</style>
 <div>
+<iframe src="https://discordapp.com/widget?id=645292086735667201&theme=dark" width="300" height="400" allowtransparency="true" frameborder="0" align='right'></iframe>
     <br>
     <table class="news_box">
         <h1>Number of posts {{number_of_posts}}</h1>
@@ -101,17 +26,14 @@ table{
         </tr>
             {% endfor %}
     </table>
-</div>
-<div>
-<iframe src="https://discordapp.com/widget?id=645292086735667201&theme=dark" width="300" height="400" allowtransparency="true" frameborder="0" align='right'></iframe>
-</div>
-<div>
-    {% if user.is_admin %}
-        <form method="POST" enctype="multipart/form-data">{% csrf_token %}
-            {% csrf_token %}
-            {{ form }}
-            <button type="submit">Submit</button>
-        </form>
-    {% endif %}
+    <div class="right_div">
+        {% if user.is_admin %}
+            <form method="POST" enctype="multipart/form-data">{% csrf_token %}
+                {% csrf_token %}
+                {{ form }}
+                <button type="submit">Submit</button>
+            </form>
+        {% endif %}
+    </div>
 </div>
 {% endblock content %}

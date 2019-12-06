@@ -1,35 +1,6 @@
 {% extends 'base.html' %}
-<style>
-    h2{
-        color: white;
-    }
-    ul{
-        color: white;
-    }
-    .white{
-        color: white;
-        word-wrap: break-word;
-    }
-    .inline{
-        display: inline;
-    }
-    .text_box{
-        background-color: #2E2633;
-        border-style: solid;
-        border-width: 5px;
-        margin: 3px;
-        border-radius: 10px;
-        width: 70%;
-        word-wrap: break-word;
+{% block content %}
 
-    }
-    .text_box h3{
-        color: white;
-    }
-    .text_box p{
-        color: #EFFFCD;
-    }
-</style>
 <div class="white">
     <h3>{{article.title}}</h3>
     <p>{{article.text}}</p>
