@@ -29,7 +29,7 @@
 </style>
 <header>
     <ul>
-        <li><a class="active" href="{% url 'index' %}">Home</a></li>
+        <li><a class="active" href="{% url 'core:index' %}">Home</a></li>
         <li><a href="/articles">News</a></li>
         {% if user.is_authenticated %}
             <li class="right"><a href="/logout">Logout</a></li>

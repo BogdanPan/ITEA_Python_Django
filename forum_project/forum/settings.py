@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
-from .secret_info import HOSTS, KEY
+from .secret_info import HOSTS, KEY, MAIL_HOST, MAIL_PASSWORD, MAIL_MAIL, MAIL_PASSWORD, MAIL_PORT
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -109,6 +109,28 @@ AUTH_PASSWORD_VALIDATORS = [
 AUTH_USER_MODEL = "roleplay_user_and_login.MyUser"
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
+# Email
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = MAIL_HOST
+EMAIL_HOST_PASSWORD = MAIL_PASSWORD
+EMAIL_PORT = MAIL_PORT
+EMAIL_USE_TLS = True
+# Celery and redis
+REDIS_LOCALHOST = 'redis://localhost:6379'
+CACHES = {
+    'default':{
+        'BACKEND': 'django.redis.cache.RedisCache',
+        'LOCATION': REDIS_LOCALHOST,
+        'OPTIONS':{
+            'CLIENT_CLASS': 'django.redis.client.DefaultClient'
+        }
+    }
+}
+CELERY_BROKER_URL = REDIS_LOCALHOST
+CELERY_RESULT_BACKEND = 'redis://localhost:6379'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TASK_SERIALIZER = 'json'
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
