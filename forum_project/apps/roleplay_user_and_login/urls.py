@@ -1,4 +1,4 @@
-from .views import RegistrationView, CabinetView, InventoryView, LoginView, LogoutView
+from .views import RegistrationView, CabinetView, InventoryView, LoginView, LogoutView, activate
 from django.urls import path, include
 from django.contrib.auth import views as auth_views
 from django.views.generic import TemplateView
@@ -6,9 +6,10 @@ urlpatterns = [
 	path('login/', LoginView.as_view(), name='login'),
 	path('logout/', LogoutView.as_view(), name='logout'),
 	path('signup/', RegistrationView.as_view(), name='signup'),
+	path('activate/<uidb64>/<token>/', activate, name='activate'),  
 	path('reset/', auth_views.PasswordResetView.as_view(
 		template_name='roleplay_user_and_login/pw_reset.html',
-		success_url='reset/done/'
+		success_url='done/'
 	), name='reset_password'),
 	path('reset/done/', TemplateView.as_view(
 		template_name='roleplay_user_and_login/pw_reset_done.html'

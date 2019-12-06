@@ -3,37 +3,41 @@ from django.shortcuts import render, redirect
 from django.views.generic import View, TemplateView, ListView, DetailView, RedirectView, CreateView, FormView
 from django.http.response import JsonResponse
 from django.urls import reverse_lazy
-from .models import Inventory, Item
+from .models import Inventory, Item, MyUser
 from ..core.models import Comment
 from .forms import UserCreationForm
 from django.contrib.auth.forms import AuthenticationForm
+from .tokens import account_activation_token
+from django.http import HttpResponse  
+from django.shortcuts import render  
+from django.contrib.sites.shortcuts import get_current_site  
+from django.utils.encoding import force_bytes, force_text  
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode  
+from django.template.loader import render_to_string
 
 
-# def signup(request):
-#    if request.method == 'POST':
-#        form = UserCreationForm(request.POST)
-#        if form.is_valid():
-#            form.save()
-#            username = form.cleaned_data.get('username')
-#            raw_password = form.cleaned_data.get('password1')
-#            user = authenticate(username=username, password=raw_password)
-#            login(request, user)
-#            return redirect('index')
-#    else:
-#        form = UserCreationForm()
-#    return render(request, 'roleplay_user_and_login/signup.html', {'form': form})
 class RegistrationView(FormView):
     template_name = 'roleplay_user_and_login/signup.html'
     form_class = UserCreationForm
     success_url = reverse_lazy('core:index')
     def form_valid(self, form):
-        user = form.save()
-        user.send_user_mail('Registration', 'Welcome!')
-        login(self.request, user)
-        return super().form_valid(form)
-    
-    def form_invalid(self, form):
-        return JsonResponse(form.errors)
+        print('form is valid')
+        user = form.save(commit=False)
+        user.is_active = False
+        user.save()
+        print('user saved')
+        current_site = get_current_site(self.request)
+        mail_subject = 'Activate your blog account.'
+        message = render_to_string(
+            'roleplay_user_and_login/acc_active_email.html', {
+                'user': user,
+                'domain': current_site.domain,
+                'uid':urlsafe_base64_encode(force_bytes(user.pk)),
+                'token':account_activation_token.make_token(user),
+            }
+        )
+        user.send_user_mail(mail_subject, message)
+        return HttpResponse('Please confirm your email address to complete the registration')
 
 
 class LoginView(FormView):
@@ -73,3 +77,18 @@ class InventoryView(CreateView):
         inv = Inventory.objects.filter(id=self.get_object().pk).first()
         ctx = {'items': Item.get_inventory_items(inv)}
         return ctx
+
+def activate(request, uidb64, token):
+    try:
+        uid = force_text(urlsafe_base64_decode(uidb64))
+        user = MyUser.objects.get(pk=uid)
+    except(TypeError, ValueError, OverflowError, MyUser.DoesNotExist):
+        user = None
+    if user is not None and account_activation_token.check_token(user, token):
+        user.is_active = True
+        user.save()
+        login(request, user)
+        # return redirect('home')
+        return HttpResponse('Thank you for your email confirmation. Now you can login your account.')
+    else:
+        return HttpResponse('Activation link is invalid!')
