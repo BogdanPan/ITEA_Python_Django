@@ -3,8 +3,7 @@ from django.contrib.auth.models import (
     BaseUserManager, AbstractBaseUser, PermissionsMixin
 )
 from django.db import models
-from django.core.mail import send_mail
-from django.conf import settings
+from .tasks import send_mail_task
 
 class MyUserManager(BaseUserManager):
     def create_user(self, username, email, password=None):
@@ -58,7 +57,7 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
         return self.is_admin
     
     def send_user_mail(self, subject, message):
-        send_mail(subject, message, settings.EMAIL_HOST_USER, [self.email])
+        send_mail_task.delay(subject, message, self.email)
 
 class Project(models.Model):
     name = models.CharField(max_length=64)
