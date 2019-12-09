@@ -2,6 +2,9 @@ from .views import RegistrationView, CabinetView, InventoryView, LoginView, Logo
 from django.urls import path, include
 from django.contrib.auth import views as auth_views
 from django.views.generic import TemplateView
+
+
+app_name = 'roleplay_user_and_login'
 urlpatterns = [
 	path('login/', LoginView.as_view(), name='login'),
 	path('logout/', LogoutView.as_view(), name='logout'),

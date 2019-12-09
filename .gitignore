@@ -109,3 +109,5 @@ forum_project/static_content/*
 forum_project/*/static/*
 forum_project/forum/secret_info.py
 *.sqlite3
+forum_project/db.sqlite3
+forum_project/db.sqlite3

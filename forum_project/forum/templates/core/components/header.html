@@ -34,6 +34,10 @@
         {% if user.is_authenticated %}
             <li class="right"><a href="/logout">Logout</a></li>
             <li class="right"><a href='/cabinet'>Hello, {{user}}</a></li>
+            {% if user.is_admin %}
+                <li class = "right"><a href='/api/v1/article/'> Api </a></li>
+                <li class = "right"><a href='/admin'> Admin panel </a></li>
+            {% endif %}
         {% else %}
             <li class="right"><a href="/reset">Forgot password?</a></li>
             <li class="right"><a href="/signup">Signup</a></li>

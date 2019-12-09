@@ -14,7 +14,7 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.utils.encoding import force_bytes, force_text  
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode  
 from django.template.loader import render_to_string
-
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 class RegistrationView(FormView):
     template_name = 'roleplay_user_and_login/signup.html'
@@ -57,7 +57,9 @@ class LogoutView(RedirectView):
         logout(self.request)
         return super().get_redirect_url(*args, **kwargs)
 
-class CabinetView(TemplateView):
+
+class CabinetView(LoginRequiredMixin, TemplateView):
+    login_url = '/login/'
     template_name = 'roleplay_user_and_login/cabinet.html'
 
     def get_context_data(self, **kwargs):
