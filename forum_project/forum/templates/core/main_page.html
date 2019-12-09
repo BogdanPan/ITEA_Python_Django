@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
+{% load static  %}
 {% load custom_filters %}
 <div>
 <iframe src="https://discordapp.com/widget?id=645292086735667201&theme=dark" width="300" height="400" allowtransparency="true" frameborder="0" align='right'></iframe>
@@ -17,7 +18,11 @@
                     </div>
 
                     <div class="left_box">
-                        <img src="{{article.image.url}}" width="80" height="80">
+                        {% if article.image %}
+                            <img src="{{article.image.url}}" width="80" height="80">
+                        {% else %}
+                            <img src="{% static 'img/blank.png' %}" width="80" height="80">
+                        {% endif %}
                         <font><p>{{article.text |shorten_text}}</p></font>
                     </div>
 
