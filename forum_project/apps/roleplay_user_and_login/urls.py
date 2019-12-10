@@ -13,10 +13,10 @@ urlpatterns = [
 	path('reset/', auth_views.PasswordResetView.as_view(
 		template_name='roleplay_user_and_login/pw_reset.html',
 		success_url='done/'
-	), name='reset_password'),
+	), name='reset'),
 	path('reset/done/', TemplateView.as_view(
 		template_name='roleplay_user_and_login/pw_reset_done.html'
-	), name='reset_password_done'),
+	), name='reset_done'),
 	path('cabinet/', CabinetView.as_view(), name='cabinet'),
 	path('inventory/<int:pk>', InventoryView.as_view(), name='inventory'),
 	path('', include('django.contrib.auth.urls'))

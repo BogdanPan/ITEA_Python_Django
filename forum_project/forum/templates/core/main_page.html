@@ -25,12 +25,29 @@
                         {% endif %}
                         <font><p>{{article.text |shorten_text}}</p></font>
                     </div>
-
+                    
                 </div>
             </td>
         </tr>
             {% endfor %}
     </table>
+    <div class="pagination">
+        <span class="white">
+            {% if articles.has_previous %}
+                <a href="?page=1">&laquo; first</a>
+                <a href="?page={{ articles.previous_page_number }}">previous</a>
+            {% endif %}
+
+            <span class="current">
+                Page {{ articles.number }} of {{ articles.paginator.num_pages }}.
+            </span>
+
+            {% if articles.has_next %}
+                <a href="?page={{ articles.next_page_number }}">next</a>
+                <a href="?page={{ articles.paginator.num_pages }}">last &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
     <div class="right_div">
         {% if user.is_admin %}
             <form method="POST" enctype="multipart/form-data">{% csrf_token %}
@@ -41,4 +58,5 @@
         {% endif %}
     </div>
 </div>
+
 {% endblock content %}

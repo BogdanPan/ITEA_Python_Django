@@ -14,8 +14,16 @@ class MainPageView(CreateView):
 	success_url = ''
 
 	def get_context_data(self, **kwargs):
-		query = Article.objects.all().order_by('-created')[:5]
-		context = ({'articles': query, 'number_of_posts': len(query), 'form':self.form_class})
+		f_articles = Article.objects.all()
+		paginator = Paginator(object_list=f_articles.order_by('-created'), per_page=5)
+		page = self.request.GET.get('page')
+		try:
+			articles = paginator.page(page)
+		except PageNotAnInteger:
+			articles = paginator.page(1)
+		except EmptyPage:
+			articles = paginator.page(paginator.numcpages)
+		context = ({'articles': articles, 'number_of_posts': len(f_articles), 'form':self.form_class})
 		return context
 
 	def form_valid(self, form):
@@ -26,7 +34,16 @@ class ArticlesView(TemplateView):
 	template_name = 'core/articles.html'
 
 	def get_context_data(self, **kwargs):
-		return {'articles': Article.objects.all()}
+		articles = Article.objects.all()
+		paginator = Paginator(object_list=articles.order_by('-created'), per_page=15)
+		page = self.request.GET.get('page')
+		try:
+			articles = paginator.page(page)
+		except PageNotAnInteger:
+			articles = paginator.page(1)
+		except EmptyPage:
+			articles = paginator.page(paginator.num_pages)
+		return {'articles': articles}
 
 
 class ArticleDetailView(DetailView):
