@@ -120,7 +120,7 @@ LOGOUT_REDIRECT_URL = '/'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = os.environ.get('MAIL_HOST', None)
 EMAIL_HOST_USER = os.environ.get('MAIL_MAIL', None)
-EMAIL_HOST_PASSWORD = os.environ.get('MAIL_HOST', None')
+EMAIL_HOST_PASSWORD = os.environ.get('MAIL_HOST', None)
 EMAIL_PORT = os.environ.get('MAIL_PORT', None)
 EMAIL_USE_TLS = True
 # Celery and redis
