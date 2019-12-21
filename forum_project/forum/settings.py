@@ -25,13 +25,13 @@ PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY', 'default or None')
+SECRET_KEY = os.environ.get('SECRET_KEY', None)
 
 
 #7 SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = json.loads(os.environ.get('SITE_HOSTS', 'default or None'))['HOSTS']
+ALLOWED_HOSTS = json.loads(os.environ.get('SITE_HOSTS', ['127.0.0.1']))['HOSTS']
 
 
 # Application definition
@@ -118,10 +118,10 @@ LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 # Email
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = os.environ.get('MAIL_HOST', 'default or None')
-EMAIL_HOST_USER = os.environ.get('MAIL_MAIL', 'default or None')
-EMAIL_HOST_PASSWORD = os.environ.get('MAIL_HOST', 'default or None')
-EMAIL_PORT = os.environ.get('MAIL_PORT', 'default or None')
+EMAIL_HOST = os.environ.get('MAIL_HOST', None)
+EMAIL_HOST_USER = os.environ.get('MAIL_MAIL', None)
+EMAIL_HOST_PASSWORD = os.environ.get('MAIL_HOST', None')
+EMAIL_PORT = os.environ.get('MAIL_PORT', None)
 EMAIL_USE_TLS = True
 # Celery and redis
 REDIS_LOCALHOST = 'redis://localhost:6379'
