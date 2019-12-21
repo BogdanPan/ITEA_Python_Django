@@ -106,5 +106,6 @@ venv.bak/
 forum_project/apps/core/migrations/*
 forum_project/apps/roleplay_user_and_login/migrations/*
 forum_project/forum/secret_info.py
-static_content/static/admin/*
+forum_project/static_content/static/admin
+forum_project/static_content/static/rest_framework
 *.sqlite3
