@@ -11,7 +11,12 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
-from .secret_info import HOSTS, KEY, MAIL_HOST, MAIL_PASSWORD, MAIL_MAIL, MAIL_PASSWORD, MAIL_PORT
+import json
+try:
+    from forum.local_settings import *
+except ImportError:
+    pass
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -20,13 +25,13 @@ PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = KEY
+SECRET_KEY = os.environ.get('SECRET_KEY', 'default or None')
 
 
 #7 SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = HOSTS
+ALLOWED_HOSTS = json.loads(os.environ.get('SITE_HOSTS', 'default or None'))['HOSTS']
 
 
 # Application definition
@@ -113,10 +118,10 @@ LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 # Email
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = MAIL_HOST
-EMAIL_HOST_USER = MAIL_MAIL
-EMAIL_HOST_PASSWORD = MAIL_PASSWORD
-EMAIL_PORT = MAIL_PORT
+EMAIL_HOST = os.environ.get('MAIL_HOST', 'default or None')
+EMAIL_HOST_USER = os.environ.get('MAIL_MAIL', 'default or None')
+EMAIL_HOST_PASSWORD = os.environ.get('MAIL_HOST', 'default or None')
+EMAIL_PORT = os.environ.get('MAIL_PORT', 'default or None')
 EMAIL_USE_TLS = True
 # Celery and redis
 REDIS_LOCALHOST = 'redis://localhost:6379'
@@ -168,3 +173,4 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static_content', 'static')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static_content', 'media')
+
